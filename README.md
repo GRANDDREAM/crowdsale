@@ -4,7 +4,7 @@ DAGT is a leading decentralized platform which allows holders of blockchain asse
 
 # DAGT Tokens
 
-This is an overview of the project **DAGT Tokens** presented on the [Blockchain For Digital Assets](http://www.dagt.io/?lang=en).
+This is an overview of the project **DAGT Tokens** presented on the [Make your digital assets fly](http://www.dagt.io/?lang=en).
 
 # Mission
 
