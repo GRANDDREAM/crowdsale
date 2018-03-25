@@ -21,15 +21,15 @@ The new features of blockchain technology allow us to redefine the value of lend
 
 # How It Works | Economics, Incentives & Fees
 
-User (C-side).
-· Users who hold DAGT and use their own holdings of digital assets to initiate loan credit qualification;
-· Users who are bullish on digital assets and hold for long-term, but they need to gain liquidity in the short to medium term;
-DAGT Foundation.
-· DAGT Foundation (non-profit) is responsible for the research and development, as well as the operation and promotion of the DAGT project;
-· Built on blockchain technology, the platform provides digital assets loan credit service for credit users;
+- User (C-side).
+  - Users who hold DAGT and use their own holdings of digital assets to initiate loan credit qualification;
+  - Users who are bullish on digital assets and hold for long-term, but they need to gain liquidity in the short to medium term;
+- DAGT Foundation.
+  - DAGT Foundation (non-profit) is responsible for the research and development, as well as the operation and promotion of the DAGT project;
+  - Built on blockchain technology, the platform provides digital assets loan credit service for credit users;
 Lending agency (B-side).
-· Refers to institutions compliance with relevant national laws and have the qualifications of lending, such as banks, online loan companies, and small loan companies;
-· DAGT and third-party lending institutions will achieve technical integration;
+  - Refers to institutions compliance with relevant national laws and have the qualifications of lending, such as banks, online loan companies, and small loan companies;
+  - DAGT and third-party lending institutions will achieve technical integration;
 
 These are some of the design elements to create an efficient system:
 
