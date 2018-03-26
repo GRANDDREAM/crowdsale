@@ -25,6 +25,7 @@ contract DagtCrowdsale is CappedCrowdsale, MintedCrowdsale, FinalizableCrowdsale
     uint public constant BONUS_COEFF = 1000; 
     // Variables
     address public remainingTokensWallet;
+    uint public lockingRatio;
 
      // The following will be populated by main crowdsale contract
     uint32[] public BONUS_TIMES;
@@ -40,16 +41,17 @@ contract DagtCrowdsale is CappedCrowdsale, MintedCrowdsale, FinalizableCrowdsale
     * @param _wallet Address where collected funds will be forwarded to
     * @param _remainingTokensWallet remaining tokens wallet
     * @param _cap Max amount of wei to be contributed
+    * @param _lockingRatio locking ratio except bunus
     * @param _token Address of the token being sold
     */
-    function DagtCrowdsale(uint256 _openingTime, uint256 _closingTime, uint256 _rate, address _wallet, address _remainingTokensWallet, uint256 _cap, MintableToken _token) public
+    function DagtCrowdsale(uint256 _openingTime, uint256 _closingTime, uint256 _rate, address _wallet, address _remainingTokensWallet, uint256 _cap, uint _lockingRatio, MintableToken _token) public
         Crowdsale(_rate, _wallet, _token)
         CappedCrowdsale(_cap)
         TimedCrowdsale(_openingTime, _closingTime) {
             
         require(_remainingTokensWallet != address(0));
         remainingTokensWallet = _remainingTokensWallet;
-        
+        setLockedRatio(_lockingRatio);
     }
     /**
     * @dev Checks whether _beneficiary in whitelisted for the Presale And sale.
@@ -100,9 +102,18 @@ contract DagtCrowdsale is CappedCrowdsale, MintedCrowdsale, FinalizableCrowdsale
     */
     function computeTokens(uint256 _weiAmount) public constant returns(uint256) {
         uint256 tokens = _weiAmount.mul(rate.mul(computeTimeBonus(now))).div(BONUS_COEFF);
-        return tokens.mul(computeAmountBonus(_weiAmount)).div(BONUS_COEFF);
+        uint256 bonus = tokens.mul(computeAmountBonus(_weiAmount)).div(BONUS_COEFF);
+        return tokens.div(lockingRatio).add(bonus);
     }
-
+    
+   /**
+    * @dev Set the lockingRatio  of  total bonus that is the sum of bonus by time. 
+    * @param _lockingRatio locking ratio Except bunus
+    */
+    function setLockedRatio(uint _lockingRatio)  public onlyOwner{
+        require(_lockingRatio > uint(0));
+        lockingRatio = _lockingRatio;
+    }
     /**
     * @dev Computes bonus based on time of contribution relative to the beginning of crowdsale
     * @return bonus 
