@@ -26,6 +26,7 @@ contract DagtCrowdsale is CappedCrowdsale, MintedCrowdsale, FinalizableCrowdsale
     // Variables
     address public remainingTokensWallet;
     uint public lockingRatio;
+    uint256 public minWeiAmount;
 
      // The following will be populated by main crowdsale contract
     uint32[] public BONUS_TIMES;
@@ -101,14 +102,25 @@ contract DagtCrowdsale is CappedCrowdsale, MintedCrowdsale, FinalizableCrowdsale
     * @return tokens 
     */
     function computeTokens(uint256 _weiAmount) public constant returns(uint256) {
+        if(_weiAmount < minWeiAmount){ 
+            return 0;
+        }
         uint256 tokens = _weiAmount.mul(rate.mul(computeTimeBonus(now))).div(BONUS_COEFF);
         uint256 bonus = tokens.mul(computeAmountBonus(_weiAmount)).div(BONUS_COEFF);
         return tokens.div(lockingRatio).add(bonus);
     }
+    /**
+    * @dev Set the Minimum of investment. 
+    * @param _minWeiAmount Value in wei
+    */
+    function setMinAmount(uint256 _minWeiAmount)  public onlyOwner{
+        require(_minWeiAmount > uint256(0));
+        minWeiAmount = _minWeiAmount;
+    }
     
    /**
     * @dev Set the lockingRatio  of  total bonus that is the sum of bonus by time. 
-    * @param _lockingRatio locking ratio Except bunus
+    * @param _lockingRatio locking ratio except bunus
     */
     function setLockedRatio(uint _lockingRatio)  public onlyOwner{
         require(_lockingRatio > uint(0));
